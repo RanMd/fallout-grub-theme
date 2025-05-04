@@ -15,7 +15,7 @@ INSTALLER_DEPENDENCIES=(
     'tar'
     'tee'
     'tr'
-    'wget'
+    'curl'
 )
 
 for i in "${INSTALLER_DEPENDENCIES[@]}"; do
@@ -69,7 +69,8 @@ else
 fi
 
 echo 'Fetching and unpacking theme'
-wget -O - https://github.com/shvchk/${GRUB_THEME}/archive/master.tar.gz | tar -xzf - --strip-components=1
+curl -L https://github.com/shvchk/${GRUB_THEME}/archive/master.tar.gz | tar -xzf - --strip-components=1
+
 
 if [[ "$INSTALLER_LANG" != "English" ]]; then
     echo "Changing language to ${INSTALLER_LANG}"
