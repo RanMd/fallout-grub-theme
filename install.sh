@@ -69,7 +69,7 @@ else
 fi
 
 echo 'Fetching and unpacking theme'
-curl -L https://github.com/shvchk/${GRUB_THEME}/archive/master.tar.gz | tar -xzf - --strip-components=1
+curl -L https://github.com/RanMd/${GRUB_THEME}/archive/master.tar.gz | tar -xzf - --strip-components=1
 
 
 if [[ "$INSTALLER_LANG" != "English" ]]; then
@@ -116,6 +116,47 @@ if [[ -e /etc/os-release ]]; then
             cp icons/${ID}.png icons/kernel.png
         fi
     fi
+fi
+
+# Shutdown entry
+SHUTDOWN_TEXT='' 
+
+declare -A SHUTDOWN_LANGS=(
+    [Chinese_simplified]='关闭'
+    [Chinese_traditional]='關閉'
+    [English]='Shutdown'
+    [French]='Éteindre'
+    [German]='Herunterfahren'
+    [Hungarian]='Leállítás'
+    [Italian]='Arresta'
+    [Korean]='종료'
+    [Latvian]='Izslēgt'
+    [Norwegian]='Slå av'
+    [Polish]='Wyłącz'
+    [Portuguese]='Desligar'
+    [Russian]='Выключить'
+    [Rusyn]='Выключыти'
+    [Spanish]='Apagar'
+    [Turkish]='Kapat'
+    [Ukrainian]='Вимкнути'
+)
+
+read -p 'Would you like to create an entry in grub, to shut down the system?' res
+if [[ "$res" == "y" || "$res" == "Y" ]]; then
+    echo 'An entry to shut down the system will be created in the file /etc/grub.d/40_custom'
+
+    # Get the text based on the language 
+    SHUTDOWN_TEXT=${SHUTDOWN_LANGS[$INSTALLER_LANG]}
+
+    # Add the entry to the grub file
+    sudo cat << '    EOF' >> /etc/grub.d/40_custom
+
+# Entry to shut down the system
+menuentry "$SHUTDOWN_TEXT" --class shutdown {
+    poweroff
+}
+    EOF
+
 fi
 
 echo 'Creating GRUB themes directory'

@@ -14,7 +14,12 @@ Supported languages: Chinese (simplified), Chinese (traditional), English, Frenc
   - Download install script:
 
     ```sh
-    wget -P /tmp https://github.com/shvchk/fallout-grub-theme/raw/master/install.sh
+    wget -P /tmp https://github.com/RanMd/fallout-grub-theme/blob/master/install.sh
+    ```
+    or 
+
+    ```sh
+    curl -L -o /tmp/install.sh https://github.com/RanMd/fallout-grub-theme/blob/master/install.sh
     ```
 
   - Review it at `/tmp/install.sh`
@@ -24,12 +29,6 @@ Supported languages: Chinese (simplified), Chinese (traditional), English, Frenc
     ```sh
     bash /tmp/install.sh
     ```
-
-- **Easier, less secure way** — just download and run install script:
-
-  ```sh
-  wget -O - https://github.com/shvchk/fallout-grub-theme/raw/master/install.sh | bash
-  ```
 
 <br>
 
