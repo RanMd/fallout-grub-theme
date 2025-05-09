@@ -141,21 +141,20 @@ declare -A SHUTDOWN_LANGS=(
     [Ukrainian]='Вимкнути'
 )
 
-read -p 'Would you like to create an entry in grub, to shut down the system?' res
+read -p 'Would you like to create an entry in grub to shut down the system? (y/n) ' res
 if [[ "$res" == "y" || "$res" == "Y" ]]; then
     echo 'An entry to shut down the system will be created in the file /etc/grub.d/40_custom'
 
-    # Get the text based on the language 
+    # Get the text based on the language
     SHUTDOWN_TEXT=${SHUTDOWN_LANGS[$INSTALLER_LANG]}
 
-    # Add the entry to the grub file
-    sudo cat << '    EOF' >> /etc/grub.d/40_custom
-
+    # Use printf with sudo tee directly
+    sudo tee -a /etc/grub.d/40_custom > /dev/null <<EOF
 # Entry to shut down the system
 menuentry "$SHUTDOWN_TEXT" --class shutdown {
     poweroff
 }
-    EOF
+EOF
 
 fi
 
