@@ -152,7 +152,7 @@ if [[ "$res" == "y" || "$res" == "Y" ]]; then
     sudo tee -a /etc/grub.d/40_custom > /dev/null <<EOF
 # Entry to shut down the system
 menuentry "$SHUTDOWN_TEXT" --class shutdown {
-    poweroff
+    halt
 }
 EOF
 
